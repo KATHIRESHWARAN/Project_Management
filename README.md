@@ -392,19 +392,82 @@ Vite will start the client on `http://localhost:3000`. Open `http://localhost:30
 
 ## 13. Deployment Guidelines
 
-### Production Build
-1. Build the frontend:
+### Architecture Overview
+TaskForge is designed with decoupled frontend and backend services:
+- **Backend API**: Deployed as a Node.js Web Service on **Render**.
+- **Frontend Client**: Deployed as a static Single Page Application (SPA) on **Netlify** or **Vercel**.
+- **Database**: Cloud-hosted MySQL database on **Aiven Cloud**.
+
+---
+
+### Deployment — Render Backend
+
+Follow these steps to deploy the backend API to **Render**:
+
+#### 1. Service Specification
+| Setting | Configuration Value |
+|---|---|
+| **Service Type** | **Web Service** |
+| **Environment** | `Node` |
+| **Language** | Node.js (v18+) |
+| **Root Directory** | `backend` |
+| **Build Command** | `npm install` |
+| **Start Command** | `npm start` |
+| **Health Check Path** | `/api/health` |
+
+#### 2. Environment Variables on Render
+Navigate to your Render Web Service dashboard -> **Environment** tab, and configure the following:
+
+| Key | Example Value | Description |
+|---|---|---|
+| `NODE_ENV` | `production` | Enables production error handling & optimizations |
+| `PORT` | `10000` | Render injects this automatically (defaults to 5000) |
+| `FRONTEND_URL` | `https://your-app.netlify.app` | URL of your deployed frontend for CORS access |
+| `DB_HOST` | `mysql-1a40b90e-taskforge.f.aivencloud.com` | Aiven Cloud MySQL hostname |
+| `DB_PORT` | `16783` | Aiven Cloud MySQL port |
+| `DB_USER` | `avnadmin` | MySQL database username |
+| `DB_PASSWORD` | `your_aiven_db_password` | MySQL database password |
+| `DB_NAME` | `defaultdb` | MySQL database name |
+| `DB_SSL` | `true` | Enables TLS/SSL encryption |
+| `DB_SSL_CA` | `certs/ca.pem` | Relative path to the CA certificate in the repo |
+| `JWT_SECRET` | `your_strong_random_jwt_secret` | Strong secret used for signing JWT tokens |
+| `JWT_EXPIRES_IN` | `1d` | Token validity duration |
+
+> [!TIP]
+> **Optional Raw CA Certificate**: Alternatively, you can paste the full contents of `ca.pem` directly into an environment variable named `DB_SSL_CA_CERT` or as a Render **Secret File** at `certs/ca.pem`.
+
+#### 3. Health Check Verification
+Render monitors your service health using:
+- **Path**: `GET /api/health`
+- **Expected Response**:
+  ```json
+  {
+    "success": true,
+    "message": "Project Management System API is running smoothly.",
+    "timestamp": "2026-09-11T15:30:00.000Z"
+  }
+  ```
+
+#### 4. Step-by-Step Render Deployment
+1. Push your latest code to your GitHub repository:
    ```bash
-   cd frontend
-   npm run build
+   git add .
+   git commit -m "feat: configure backend for Render deployment"
+   git push origin main
    ```
-2. The optimized production bundle will be created in `frontend/dist/`.
-3. In production, serve the `frontend/dist` directory through an Nginx web server or Express static file middleware (`express.static`), and run the backend using **PM2**:
-   ```bash
-   cd backend
-   npm install -g pm2
-   pm2 start src/server.js --name "pm-backend"
-   ```
+2. Log in to [Render Dashboard](https://dashboard.render.com).
+3. Click **New +** -> **Web Service**.
+4. Select your GitHub repository (`Project_Management`).
+5. Set **Root Directory** to `backend`.
+6. Set **Build Command** to `npm install`.
+7. Set **Start Command** to `npm start`.
+8. Under **Advanced** -> **Health Check Path**, enter `/api/health`.
+9. Add the required **Environment Variables** listed above.
+10. Click **Create Web Service**. Render will install dependencies, build, and deploy.
+11. Once live, copy your Render URL (e.g. `https://taskforge-api.onrender.com`) and update `VITE_API_URL` on Netlify/Vercel:
+    ```text
+    VITE_API_URL=https://taskforge-api.onrender.com/api
+    ```
 
 ---
 
