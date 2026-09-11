@@ -35,10 +35,13 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    // Match allowed origin with or without trailing slash
-    const isAllowed = allowedOrigins.some((allowed) => {
-      return allowed.replace(/\/$/, '') === origin.replace(/\/$/, '');
-    });
+    // Match allowed origins, Netlify domains, Vercel domains, and local ports
+    const isAllowed =
+      allowedOrigins.some((allowed) => allowed.replace(/\/$/, '') === origin.replace(/\/$/, '')) ||
+      /\.netlify\.app$/.test(origin) ||
+      /\.vercel\.app$/.test(origin) ||
+      /^http:\/\/localhost(:\d+)?$/.test(origin) ||
+      /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin);
 
     if (isAllowed) {
       return callback(null, true);

@@ -5,7 +5,15 @@ import axios from 'axios';
 // 2. Localhost development on desktop
 // 3. Other devices on the same local network (mobile phones, tablets)
 const getApiBaseUrl = () => {
-  const envUrl = import.meta.env.VITE_API_URL;
+  let envUrl = import.meta.env.VITE_API_URL;
+
+  // Sanitize if accidentally prefixed with "VITE_API_URL=" or has whitespace
+  if (typeof envUrl === 'string') {
+    envUrl = envUrl.trim();
+    if (envUrl.startsWith('VITE_API_URL=')) {
+      envUrl = envUrl.replace(/^VITE_API_URL=/, '').trim();
+    }
+  }
 
   if (typeof window !== 'undefined') {
     const { hostname } = window.location;
