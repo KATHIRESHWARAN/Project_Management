@@ -1,480 +1,528 @@
 # TaskForge - Full-Stack Project Management System
 
-A complete, production-ready, full-stack Project Management System built from scratch with **React (Vite)** on the frontend, **Node.js + Express** on the backend, and **MySQL** as the relational database.
-
----
+A production-ready full-stack Project Management System built with **React, Node.js, Express.js, and MySQL**.
 
 ## 📑 Table of Contents
-1. [Project Overview](#project-overview)
-2. [Key Features](#key-features)
-3. [Technology Stack](#technology-stack)
-4. [Folder Structure](#folder-structure)
-5. [Prerequisites](#prerequisites)
-6. [Database Setup](#database-setup)
-7. [Environment Variables](#environment-variables)
-8. [Installation & Getting Started](#installation--getting-started)
-9. [REST API Endpoints Overview](#rest-api-endpoints-overview)
-10. [Authentication & Authorization Flow](#authentication--authorization-flow)
-11. [Security Practices](#security-practices)
-12. [Testing & Verification](#testing--verification)
-13. [Deployment Guidelines](#deployment-guidelines)
-14. [Screenshots](#screenshots)
+
+1. Project Overview
+2. Project Objectives
+3. Key Features
+4. IIT Technical Requirements
+5. Technology Stack
+6. System Architecture
+7. Folder Structure
+8. Database Design
+9. Prerequisites
+10. Environment Variables
+11. Database Setup
+12. Installation & Getting Started
+13. Authentication & Authorization
+14. Role-Based Access Control
+15. Pagination & Sorting
+16. Audit Logging
+17. REST API Documentation
+18. Testing
+19. Docker Support
+20. CI/CD Pipeline
+21. Application Deployment
+22. Security Practices
+23. Testing & Verification
+24. Screenshots
+25. Future Enhancements
 
 ---
 
 ## 1. Project Overview
-**TaskForge** is designed for individuals and teams to organize projects, break them down into actionable tasks, track status and priority, and monitor real-time completion metrics through an executive dashboard. 
 
-The architecture is deliberately structured with clean MVC separation and simple, robust patterns so any developer or fresher can easily understand and explain the complete system end-to-end in a technical interview.
+**TaskForge** is a full-stack Project Management System that allows users to create and manage projects, organize tasks, track progress, and monitor project statistics through a centralized dashboard.
 
----
+The application follows a structured client-server architecture:
 
-## 2. Key Features
+**React Frontend → Express REST API → MySQL Database**
 
-### 🔐 Authentication & Session Management
-- Secure user registration with validation (name, unique email, password length).
-- Password encryption using **bcryptjs** with 10 salt rounds.
-- Stateless authentication using **JSON Web Tokens (JWT)** with configurable expiration.
-- Rate limiting on auth routes to prevent brute-force attacks.
-- Frontend session persistence via `localStorage` with automatic token attachment in Axios requests.
-
-### 🛡️ Strict Authorization & Multi-Tenant Data Isolation
-- Strict user-level data isolation enforced on the backend: every project query verifies `WHERE user_id = ?`.
-- Tasks can only be viewed, created, updated, or deleted if they belong to a project owned by the authenticated user.
-- Frontend Protected Routes redirect unauthenticated users to `/login`.
-
-### 📊 Real-Time Executive Dashboard
-- 5 live metric cards calculated on-the-fly from MySQL:
-  - **Total Projects**
-  - **Total Tasks**
-  - **Completed Tasks**
-  - **Pending Tasks**
-  - **Projects In Progress**
-- Recent projects showcase with direct links and quick creation.
-
-### 📁 Project Management (CRUD)
-- Create new projects with name, description, status (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`), start date, and end date.
-- Real-time client and server validation (e.g. end date cannot be earlier than start date).
-- Live search by project name and filter by status.
-- Visual task progress bar (% completed) for each project.
-- Edit and delete projects with cascade deletion of related tasks.
-
-### ✅ Task Management (CRUD & Completion)
-- Create tasks tied to projects with priority (`LOW`, `MEDIUM`, `HIGH`) and status (`PENDING`, `IN_PROGRESS`, `COMPLETED`).
-- Filter tasks by status, priority, or search by task name.
-- One-click task completion checkbox that dynamically updates project progress and dashboard statistics.
-- Visual color-coded priority indicators (High: Rose, Medium: Amber, Low: Sky Blue).
-
-### 🎨 Clean & Modern Design System
-- Built with modern Vanilla CSS custom properties.
-- Responsive layout supporting Desktop, Tablet, and Mobile devices.
-- Modal dialogs for clean create/edit flows.
-- Feedback banners, loading spinners, and empty states.
+The system also incorporates authentication, authorization, validation, security controls, testing, containerization, CI/CD, and production deployment practices.
 
 ---
 
-## 3. Technology Stack
+## 2. Project Objectives
+
+The main objectives of TaskForge are:
+
+* Provide secure user registration and authentication.
+* Allow users to create and manage projects.
+* Allow users to create, update, complete, and delete tasks.
+* Track project and task progress.
+* Provide dashboard statistics.
+* Implement role-based access control.
+* Maintain audit records of important system actions.
+* Support pagination and sorting for large datasets.
+* Provide automated unit and integration testing.
+* Containerize the application using Docker.
+* Automate testing and deployment using CI/CD.
+* Deploy the application to a production environment.
+
+---
+
+## 3. Key Features
+
+### 🔐 Authentication
+
+* User registration
+* User login
+* JWT-based authentication
+* Password hashing using bcrypt
+* Logout functionality
+* Protected routes
+* Authentication rate limiting
+* Input validation
+
+### 📁 Project Management
+
+* Create projects
+* View projects
+* Update projects
+* Delete projects
+* Project status tracking
+* Start and end dates
+* Project search
+* Project filtering
+* Project progress calculation
+
+### ✅ Task Management
+
+* Create tasks
+* Update tasks
+* Delete tasks
+* Complete tasks
+* Task priority
+* Task status
+* Task filtering
+* Task search
+* Project-based task organization
+
+### 📊 Dashboard
+
+* Total projects
+* Total tasks
+* Completed tasks
+* Pending tasks
+* Projects in progress
+* Recent projects
+* Project completion progress
+
+---
+
+# 4. IIT Technical Requirements
+
+| Requirement               | Status          |
+| ------------------------- | --------------- |
+| Docker Support            | 🟡 To Implement |
+| Unit Tests                | 🟡 To Implement |
+| Integration Tests         | 🟡 To Implement |
+| Pagination                | 🟡 To Implement |
+| Sorting                   | 🟡 To Implement |
+| Audit Logs                | 🟡 To Implement |
+| Role-Based Access Control | 🟡 To Implement |
+| CI/CD Pipeline            | 🟡 To Implement |
+| Application Deployment    | 🟡 To Implement |
+
+> The status should be changed to **🟢 Implemented** after each requirement has been completed and verified.
+
+---
+
+# 5. Technology Stack
+
+## Frontend
+
+* React 19
+* Vite
+* JavaScript
+* React Router
+* Axios
+* Vanilla CSS
+
+## Backend
+
+* Node.js
+* Express.js
+* MySQL2
+* JWT
+* bcryptjs
+* express-validator
+* express-rate-limit
+* CORS
+* dotenv
+
+## Testing
+
+* Unit Testing: **[Testing Framework]**
+* Integration Testing: **[Testing Framework]**
+* API Testing: **[Tool/Framework]**
+
+## DevOps
+
+* Docker
+* Docker Compose
+* Git
+* GitHub
+* GitHub Actions
+
+## Deployment
+
+* Frontend: **[Netlify / Vercel / Other]**
+* Backend: **[Render / Railway / Other]**
+* Database: **[Aiven / Other MySQL Provider]**
+
+---
+
+# 6. System Architecture
+
+```text
+                 ┌─────────────────────┐
+                 │      User/Client     │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   React + Vite      │
+                 │     Frontend        │
+                 └──────────┬──────────┘
+                            │ REST API
+                            ▼
+                 ┌─────────────────────┐
+                 │ Node.js + Express   │
+                 │      Backend        │
+                 └──────────┬──────────┘
+                            │
+             ┌──────────────┼──────────────┐
+             ▼              ▼              ▼
+        Authentication   RBAC         Audit Logs
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │       MySQL         │
+                 │      Database       │
+                 └─────────────────────┘
+```
+
+---
+
+# 7. Role-Based Access Control
+
+The application uses role-based permissions to control access to protected resources.
+
+Example roles:
+
+| Role  | Permissions                                  |
+| ----- | -------------------------------------------- |
+| Admin | Manage users, projects, tasks and audit logs |
+| User  | Manage own projects and tasks                |
+
+Authorization is enforced on the **backend**, not only through frontend route protection.
+
+Example:
+
+```text
+User → Login
+     ↓
+JWT Generated
+     ↓
+JWT contains user identity/role
+     ↓
+Authentication Middleware
+     ↓
+Role Middleware
+     ↓
+Protected Controller
+```
+
+---
+
+# 8. Pagination & Sorting
+
+Pagination prevents large datasets from being returned in a single API response.
+
+Example:
+
+```http
+GET /api/projects?page=1&limit=10
+```
+
+Sorting:
+
+```http
+GET /api/projects?sortBy=created_at&order=desc
+```
+
+Supported parameters:
+
+| Parameter | Example        |
+| --------- | -------------- |
+| page      | `1`            |
+| limit     | `10`           |
+| sortBy    | `created_at`   |
+| order     | `asc` / `desc` |
+
+The backend validates sorting fields to prevent unsafe SQL queries.
+
+---
+
+# 9. Audit Logging
+
+Important user actions are recorded in an audit log.
+
+Example actions:
+
+* User login
+* User logout
+* Project creation
+* Project update
+* Project deletion
+* Task creation
+* Task update
+* Task deletion
+* Status changes
+
+Example audit record:
+
+```text
+User: John Doe
+Action: CREATE_PROJECT
+Resource: Project #12
+Timestamp: 2026-09-11 10:30:00
+```
+
+Audit logs provide traceability and help administrators understand important changes made within the system.
+
+---
+
+# 10. Testing
+
+## Unit Tests
+
+Unit tests verify individual functions or modules independently.
+
+Examples:
+
+* Authentication validation
+* Password validation
+* Token generation
+* Project validation
+* Task validation
+* Utility functions
+
+Run:
+
+```bash
+npm test
+```
+
+## Integration Tests
+
+Integration tests verify that multiple parts of the application work together.
+
+Examples:
+
+```text
+Register → Database → JWT
+Login → Authentication → Protected API
+Create Project → MySQL → Retrieve Project
+Create Task → Project → Database
+```
+
+Example:
+
+```bash
+npm run test:integration
+```
+
+---
+
+# 11. Docker Support
+
+The application can be containerized using Docker.
+
+Expected services:
+
+```text
+┌───────────────┐
+│   Frontend    │
+│    Docker     │
+└───────┬───────┘
+        │
+┌───────▼───────┐
+│    Backend    │
+│    Docker     │
+└───────┬───────┘
+        │
+┌───────▼───────┐
+│     MySQL     │
+│    Docker     │
+└───────────────┘
+```
+
+Start the application:
+
+```bash
+docker compose up --build
+```
+
+Stop the application:
+
+```bash
+docker compose down
+```
+
+---
+
+# 12. CI/CD Pipeline
+
+The project uses GitHub Actions to automate the development workflow.
+
+```text
+Developer
+   │
+   ▼
+Git Push
+   │
+   ▼
+GitHub Repository
+   │
+   ▼
+GitHub Actions
+   │
+   ├── Install Dependencies
+   ├── Run Unit Tests
+   ├── Run Integration Tests
+   ├── Build Application
+   └── Deploy
+        │
+        ▼
+   Production
+```
+
+The pipeline ensures that code is tested and built automatically before deployment.
+
+---
+
+# 13. Application Deployment
+
+The application is deployed using separate production services for the frontend, backend, and database.
 
 ### Frontend
-- **Library**: React 19
-- **Build Tool**: Vite
-- **Language**: JavaScript (ES Modules)
-- **Routing**: React Router DOM (v7)
-- **HTTP Client**: Axios (configured with interceptors)
-- **Styling**: Vanilla CSS Design System with responsive grid & flexbox
+
+```bash
+npm run build
+```
+
+Production output:
+
+```text
+frontend/dist/
+```
 
 ### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js (v5)
-- **Database Driver**: `mysql2/promise` (Connection Pooling)
-- **Authentication**: `jsonwebtoken` (JWT)
-- **Password Security**: `bcryptjs`
-- **Validation**: `express-validator`
-- **Rate Limiting**: `express-rate-limit`
-- **CORS**: `cors`
-- **Configuration**: `dotenv`
-- **Dev Server**: `nodemon`
+
+The backend runs as a production Node.js application.
 
 ### Database
-- **Engine**: MySQL (8.0+)
-- **Database Name**: `project_management`
-- **Charset**: `utf8mb4` with `utf8mb4_unicode_ci` collation
-- **Tables**: `users`, `projects`, `tasks`
+
+The production application connects to a hosted MySQL-compatible database using environment variables.
+
+Production environment variables must never be committed to Git.
 
 ---
 
-## 4. Folder Structure
+# 14. Security Practices
 
-```
-e:\IIT/
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx          # Top navigation with user badge & logout
-│   │   │   ├── Sidebar.jsx         # Navigation drawer for dashboard & projects
-│   │   │   ├── ProtectedRoute.jsx  # Route guard for authenticated views
-│   │   │   ├── Loading.jsx         # Spinner / skeleton loading component
-│   │   │   ├── ErrorMessage.jsx    # User-friendly alert banner
-│   │   │   ├── SearchBar.jsx       # Interactive search input with clear button
-│   │   │   ├── ProjectCard.jsx     # Project card with progress bar
-│   │   │   ├── ProjectForm.jsx     # Create/Edit project modal form
-│   │   │   ├── TaskCard.jsx        # Task card with priority tag & toggle
-│   │   │   ├── TaskForm.jsx        # Create/Edit task modal form
-│   │   │   └── TaskFilters.jsx     # Search, status, and priority filter bar
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── Login.jsx           # User sign-in page with demo filler
-│   │   │   ├── Register.jsx        # User registration page
-│   │   │   ├── Dashboard.jsx       # 5 Stats cards + recent projects
-│   │   │   ├── Projects.jsx        # Catalog with search, filter, and CRUD
-│   │   │   ├── ProjectDetails.jsx  # Project info + task management workspace
-│   │   │   └── NotFound.jsx        # 404 page
-│   │   │
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx     # React Context for global auth state
-│   │   ├── services/
-│   │   │   └── api.js              # Axios instance with interceptors
-│   │   ├── hooks/
-│   │   │   └── useAuth.js          # Hook to access AuthContext
-│   │   ├── App.jsx                 # Route definitions
-│   │   ├── main.jsx                # Application root entry
-│   │   └── index.css               # Modern design system stylesheet
-│   │
-│   ├── .env                        # Frontend environment variables
-│   ├── .env.example
-│   ├── index.html                  # HTML entrypoint with Inter font
-│   ├── vite.config.js              # Vite configuration (port 3000)
-│   ├── package.json
-│   └── README.md
-│
-├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── db.js               # mysql2 connection pool configuration
-│   │   │
-│   │   ├── controllers/
-│   │   │   ├── authController.js       # Register, login, logout, getMe
-│   │   │   ├── projectController.js    # Project CRUD with user filter
-│   │   │   ├── taskController.js       # Task CRUD with project verification
-│   │   │   └── dashboardController.js  # Live aggregated metrics from SQL
-│   │   │
-│   │   ├── routes/
-│   │   │   ├── authRoutes.js       # Auth endpoints + rate limiter
-│   │   │   ├── projectRoutes.js    # /api/projects protected routes
-│   │   │   ├── taskRoutes.js       # /api/tasks protected routes
-│   │   │   └── dashboardRoutes.js  # /api/dashboard/stats route
-│   │   │
-│   │   ├── middleware/
-│   │   │   ├── authMiddleware.js       # Bearer JWT verification
-│   │   │   ├── errorMiddleware.js      # Centralized error & 404 handler
-│   │   │   └── validateMiddleware.js   # express-validator result handler
-│   │   │
-│   │   ├── validators/
-│   │   │   ├── authValidator.js        # Auth input rules
-│   │   │   ├── projectValidator.js     # Project input rules
-│   │   │   └── taskValidator.js        # Task input rules
-│   │   │
-│   │   ├── utils/
-│   │   │   ├── generateToken.js        # JWT signing utility
-│   │   │   └── logger.js               # Structured logger
-│   │   │
-│   │   ├── app.js                  # Express app & middleware setup
-│   │   └── server.js               # Server bootstrapper & DB check
-│   │
-│   ├── .env                        # Backend environment configuration
-│   ├── .env.example
-│   ├── package.json
-│   └── README.md
-│
-├── database/
-│   ├── schema.sql                  # Database, tables, indexes & FK constraints
-│   └── seed.sql                    # Demo users, projects & tasks
-│
-├── docs/
-│   ├── ER-Diagram.md               # Mermaid diagram & schema specifications
-│   └── API-Documentation.md        # Comprehensive REST API reference
-│
-├── .gitignore
-└── README.md
-```
+* Password hashing using bcrypt
+* JWT authentication
+* Protected API routes
+* Role-based authorization
+* Parameterized SQL queries
+* Input validation
+* Authentication rate limiting
+* CORS configuration
+* Environment-based secrets
+* User-level data isolation
+* Secure production configuration
 
 ---
 
-## 5. Prerequisites
+# 15. Verification Checklist
 
-Make sure you have the following installed on your machine:
-- **Node.js**: v18.x or v20+ (Node v24 is tested and fully supported)
-- **npm**: v9+ or v10+
-- **MySQL Server**: 8.0 or MySQL compatible service (e.g. XAMPP, MariaDB)
+Before final submission, verify:
 
----
-
-## 6. Database Setup
-
-1. Open your MySQL client (MySQL Command Line Client, MySQL Workbench, or PowerShell):
-   ```bash
-   mysql -u root -p
-   ```
-
-2. Run the database schema creation script:
-   ```sql
-   SOURCE e:/IIT/database/schema.sql;
-   ```
-   *Or run from terminal:*
-   ```bash
-   mysql -u root -p < database/schema.sql
-   ```
-
-3. (Optional) Load sample seed data with pre-configured demo users and tasks:
-   ```sql
-   SOURCE e:/IIT/database/seed.sql;
-   ```
-   *Or run from terminal:*
-   ```bash
-   mysql -u root -p < database/seed.sql
-   ```
-
-### Pre-Configured Seed Users:
-| Full Name | Email Address | Password |
-|---|---|---|
-| John Doe | `john@example.com` | `password123` |
-| Jane Smith | `jane@example.com` | `password123` |
+* [ ] Registration works
+* [ ] Login works
+* [ ] Logout works
+* [ ] Protected routes work
+* [ ] RBAC works
+* [ ] Projects CRUD works
+* [ ] Tasks CRUD works
+* [ ] Pagination works
+* [ ] Sorting works
+* [ ] Audit logs are generated
+* [ ] Unit tests pass
+* [ ] Integration tests pass
+* [ ] Docker starts successfully
+* [ ] CI/CD pipeline passes
+* [ ] Production deployment works
+* [ ] Database connection works in production
+* [ ] No secrets are committed to GitHub
 
 ---
 
-## 7. Environment Variables
+# 16. Screenshots
 
-### Backend (`backend/.env`)
-Create or edit `backend/.env`:
-```env
-PORT=5000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=YOUR_MYSQL_ROOT_PASSWORD
-DB_NAME=project_management
-DB_PORT=3306
-JWT_SECRET=supersecretjwtkey_pm_system_2026_dev_secure
-JWT_EXPIRES_IN=1d
-```
+Add screenshots demonstrating:
 
-### Frontend (`frontend/.env`)
-Create or edit `frontend/.env`:
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+### Authentication
 
----
+* Login
+* Registration
 
-## 8. Installation & Getting Started
+### Dashboard
 
-### Step 1: Install Backend Dependencies
-Open a terminal in the root workspace and run:
-```bash
-cd backend
-npm install
-```
+* Statistics
+* Recent projects
 
-### Step 2: Install Frontend Dependencies
-In another terminal tab:
-```bash
-cd frontend
-npm install
-```
+### Project Management
 
-### Step 3: Start Backend Server
-Inside the `backend` folder:
-```bash
-npm run dev
-```
-The server will start on `http://localhost:5000/api`. You will see:
-```
-[Database] Successfully connected to MySQL database: project_management
-====================================================
-🚀 Project Management API Server running on port 5000
-🌐 Base URL: http://localhost:5000/api
-🩺 Health Check: http://localhost:5000/api/health
-====================================================
-```
+* Project list
+* Create project
+* Edit project
 
-### Step 4: Start Frontend Client
-Inside the `frontend` folder:
-```bash
-npm run dev
-```
-Vite will start the client on `http://localhost:3000`. Open `http://localhost:3000` in your web browser.
+### Task Management
+
+* Task list
+* Task filters
+* Task completion
+
+### Administration
+
+* RBAC
+* Audit logs
+
+### DevOps
+
+* Docker containers
+* GitHub Actions pipeline
+* Production application
 
 ---
 
-## 9. REST API Endpoints Overview
+# 17. Future Enhancements
 
-| Area | Method | Endpoint | Access | Description |
-|---|---|---|---|---|
-| **Health** | `GET` | `/api/health` | Public | Server health status |
-| **Auth** | `POST` | `/api/auth/register` | Public | Register new user account |
-| **Auth** | `POST` | `/api/auth/login` | Public | Login & receive JWT |
-| **Auth** | `POST` | `/api/auth/logout` | Protected | Clear session |
-| **Auth** | `GET` | `/api/auth/me` | Protected | Get authenticated profile |
-| **Dashboard** | `GET` | `/api/dashboard/stats` | Protected | Aggregated live metrics |
-| **Projects** | `GET` | `/api/projects` | Protected | List user projects (search/filter) |
-| **Projects** | `GET` | `/api/projects/:id` | Protected | Get project details & counts |
-| **Projects** | `POST` | `/api/projects` | Protected | Create new project |
-| **Projects** | `PUT` | `/api/projects/:id` | Protected | Update project details |
-| **Projects** | `DELETE` | `/api/projects/:id` | Protected | Delete project & its tasks |
-| **Tasks** | `GET` | `/api/tasks` | Protected | List tasks (search/filters) |
-| **Tasks** | `GET` | `/api/tasks/:id` | Protected | Get single task details |
-| **Tasks** | `POST` | `/api/tasks` | Protected | Create task under user project |
-| **Tasks** | `PUT` | `/api/tasks/:id` | Protected | Update task or toggle status |
-| **Tasks** | `DELETE` | `/api/tasks/:id` | Protected | Delete task |
+Possible future improvements:
 
-> For complete request and response schemas, see [docs/API-Documentation.md](docs/API-Documentation.md).
-
----
-
-## 10. Authentication & Authorization Flow
-
-```
-[User Browser]
-      │  (1) POST /api/auth/login with { email, password }
-      ▼
-[Express Auth Controller]
-      │  (2) Validate input with express-validator
-      │  (3) Fetch user from MySQL by email
-      │  (4) bcrypt.compare(password, user.password)
-      │  (5) Sign JWT { id: user.id, email: user.email }
-      ▼
-[User Browser]
-      │  (6) Stores token in localStorage
-      │  (7) Future requests include: `Authorization: Bearer <token>`
-      ▼
-[Auth Middleware]
-      │  (8) Verifies signature & expiration via jwt.verify()
-      │  (9) Injects req.user = { id, fullName, email }
-      ▼
-[Business Logic Controllers]
-         (10) Applies strict ownership: `WHERE user_id = req.user.id`
-```
-
----
-
-## 11. Security Practices
-
-- **SQL Injection Prevention**: All queries use parameterized queries / prepared statements (`?` placeholders) with `mysql2/promise`. No string concatenation is used.
-- **Password Protection**: Passwords are never stored in plain text. Hashed with `bcryptjs` (cost factor 10). Password hashes are excluded from all query outputs and responses.
-- **Brute Force Defense**: `express-rate-limit` restricts authentication attempts to 30 requests per 15-minute window per IP.
-- **Cross-Site Scripting (XSS)**: React automatically escapes output in JSX.
-- **CORS Configuration**: Restricts methods and allows standard headers.
-- **Zero Hardcoded Secrets**: Secrets and database credentials are read from `.env` files which are excluded from Git version control.
-
----
-
-## 12. Testing & Verification
-
-1. **Auth Verification**:
-   - Register account -> token returned, redirected to `/dashboard`.
-   - Test duplicate email -> receives `409 Conflict`.
-   - Test invalid password -> receives validation error.
-   - Login with wrong password -> receives `401 Unauthorized`.
-   - Logout -> localStorage cleared, redirected to `/login`.
-
-2. **Project Authorization Verification**:
-   - Log in as `john@example.com`.
-   - View projects -> displays only John's projects.
-   - Try to access Jane's project ID (`/api/projects/5`) -> receives `404 Not Found`.
-
-3. **Task Completion & Progress**:
-   - Click the check circle on any task -> marks status `COMPLETED`.
-   - Project progress bar updates immediately.
-   - Dashboard completed tasks counter increments immediately.
-
----
-
-## 13. Deployment Guidelines
-
-### Architecture Overview
-TaskForge is designed with decoupled frontend and backend services:
-- **Backend API**: Deployed as a Node.js Web Service on **Render**.
-- **Frontend Client**: Deployed as a static Single Page Application (SPA) on **Netlify** or **Vercel**.
-- **Database**: Cloud-hosted MySQL database on **Aiven Cloud**.
-
----
-
-### Deployment — Render Backend
-
-Follow these steps to deploy the backend API to **Render**:
-
-#### 1. Service Specification
-| Setting | Configuration Value |
-|---|---|
-| **Service Type** | **Web Service** |
-| **Environment** | `Node` |
-| **Language** | Node.js (v18+) |
-| **Root Directory** | `backend` |
-| **Build Command** | `npm install` |
-| **Start Command** | `npm start` |
-| **Health Check Path** | `/api/health` |
-
-#### 2. Environment Variables on Render
-Navigate to your Render Web Service dashboard -> **Environment** tab, and configure the following:
-
-| Key | Example Value | Description |
-|---|---|---|
-| `NODE_ENV` | `production` | Enables production error handling & optimizations |
-| `PORT` | `10000` | Render injects this automatically (defaults to 5000) |
-| `FRONTEND_URL` | `https://your-app.netlify.app` | URL of your deployed frontend for CORS access |
-| `DB_HOST` | `mysql-1a40b90e-taskforge.f.aivencloud.com` | Aiven Cloud MySQL hostname |
-| `DB_PORT` | `16783` | Aiven Cloud MySQL port |
-| `DB_USER` | `avnadmin` | MySQL database username |
-| `DB_PASSWORD` | `your_aiven_db_password` | MySQL database password |
-| `DB_NAME` | `defaultdb` | MySQL database name |
-| `DB_SSL` | `true` | Enables TLS/SSL encryption |
-| `DB_SSL_CA` | `certs/ca.pem` | Relative path to the CA certificate in the repo |
-| `JWT_SECRET` | `your_strong_random_jwt_secret` | Strong secret used for signing JWT tokens |
-| `JWT_EXPIRES_IN` | `1d` | Token validity duration |
-
-> [!TIP]
-> **Optional Raw CA Certificate**: Alternatively, you can paste the full contents of `ca.pem` directly into an environment variable named `DB_SSL_CA_CERT` or as a Render **Secret File** at `certs/ca.pem`.
-
-#### 3. Health Check Verification
-Render monitors your service health using:
-- **Path**: `GET /api/health`
-- **Expected Response**:
-  ```json
-  {
-    "success": true,
-    "message": "Project Management System API is running smoothly.",
-    "timestamp": "2026-09-11T15:30:00.000Z"
-  }
-  ```
-
-#### 4. Step-by-Step Render Deployment
-1. Push your latest code to your GitHub repository:
-   ```bash
-   git add .
-   git commit -m "feat: configure backend for Render deployment"
-   git push origin main
-   ```
-2. Log in to [Render Dashboard](https://dashboard.render.com).
-3. Click **New +** -> **Web Service**.
-4. Select your GitHub repository (`Project_Management`).
-5. Set **Root Directory** to `backend`.
-6. Set **Build Command** to `npm install`.
-7. Set **Start Command** to `npm start`.
-8. Under **Advanced** -> **Health Check Path**, enter `/api/health`.
-9. Add the required **Environment Variables** listed above.
-10. Click **Create Web Service**. Render will install dependencies, build, and deploy.
-11. Once live, copy your Render URL (e.g. `https://taskforge-api.onrender.com`) and update `VITE_API_URL` on Netlify/Vercel:
-    ```text
-    VITE_API_URL=https://taskforge-api.onrender.com/api
-    ```
-
----
-
-## 14. Screenshots Placeholder
-
-*(Place application screenshots here)*
-- **Dashboard View**: Overview of project statistics and recent items.
-- **Projects Catalog**: Filterable card grid with progress bars.
-- **Project Detail & Task Workspace**: Interactive task list with priority badges and status controls.
-- **Authentication Screens**: Modern login and registration cards.
+* Email notifications
+* Project collaboration
+* Real-time updates using WebSockets
+* File attachments
+* Advanced analytics
+* Activity timeline
+* Password reset
+* Refresh-token authentication
+* Cloud object storage
+* Mobile application
