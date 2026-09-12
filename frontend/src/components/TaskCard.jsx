@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TaskCheckbox from './TaskCheckbox';
 
 const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
   const [localStatus, setLocalStatus] = React.useState(task.status);
@@ -47,16 +48,21 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
       className="task-card"
       id={`task-card-${task.id}`}
       style={{
-        opacity: 1,
+        opacity: isCompleted ? 0.78 : 1,
+        transition: 'all 0.35s ease',
         borderLeft: `5px solid ${
-          task.priority === 'HIGH'
+          isCompleted
+            ? '#10b981'
+            : task.priority === 'HIGH'
             ? '#ef4444'
             : task.priority === 'MEDIUM'
             ? '#f59e0b'
             : '#0284c7'
         }`,
         boxShadow: `inset 4px 0 14px -3px ${
-          task.priority === 'HIGH'
+          isCompleted
+            ? 'rgba(16, 185, 129, 0.3)'
+            : task.priority === 'HIGH'
             ? 'rgba(239, 68, 68, 0.35)'
             : task.priority === 'MEDIUM'
             ? 'rgba(245, 158, 11, 0.35)'
@@ -65,33 +71,13 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
       }}
     >
       <div className="card-header-row">
-        <div className="checkbox-container">
-          <input
-            type="checkbox"
-            id={`task-check-${task.id}`}
-            className="task-checkbox"
-            checked={isCompleted}
-            onChange={toggleStatus}
-          />
-          <label
-            htmlFor={`task-check-${task.id}`}
-            className="checkbox-label"
-            title={isCompleted ? 'Mark as Pending' : 'Mark as Completed'}
-          >
-            <div className="checkbox-box">
-              <div className="checkbox-fill"></div>
-              <div className="checkmark">
-                <svg viewBox="0 0 24 24" className="check-icon">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
-                </svg>
-              </div>
-              <div className="success-ripple"></div>
-            </div>
-            <span className="checkbox-text" style={{ fontSize: '1.05rem', fontWeight: 700 }}>
-              {task.name}
-            </span>
-          </label>
-        </div>
+        <TaskCheckbox
+          id={`task-check-${task.id}`}
+          checked={isCompleted}
+          onChange={toggleStatus}
+          label={task.name}
+          textStyle={{ fontSize: '1.05rem', fontWeight: 700 }}
+        />
 
         <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <span className={`badge badge-priority-${task.priority}`}>

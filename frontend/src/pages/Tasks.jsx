@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import ConfirmModal from '../components/ConfirmModal';
 import Toast from '../components/Toast';
+import TaskCheckbox from '../components/TaskCheckbox';
 
 const Tasks = () => {
   // SWR Instant Cache: Load from sessionStorage immediately (0ms) if available
@@ -419,7 +420,13 @@ const Tasks = () => {
                 {pendingTasks.map((t) => (
                   <div key={t.id} className="kanban-card">
                     <div className="kanban-card-header">
-                      <h4 className="kanban-card-title">{t.name}</h4>
+                      <TaskCheckbox
+                        id={`kanban-pending-check-${t.id}`}
+                        checked={false}
+                        onChange={() => handleStatusChange(t, 'COMPLETED')}
+                        label={t.name}
+                        textStyle={{ fontWeight: 600, fontSize: '0.95rem' }}
+                      />
                       <span className={`badge badge-priority-${t.priority}`}>{t.priority}</span>
                     </div>
                     {t.description && <p className="kanban-card-desc">{t.description}</p>}
@@ -488,7 +495,13 @@ const Tasks = () => {
                 {inProgressTasks.map((t) => (
                   <div key={t.id} className="kanban-card" style={{ borderLeft: '3px solid #f59e0b' }}>
                     <div className="kanban-card-header">
-                      <h4 className="kanban-card-title">{t.name}</h4>
+                      <TaskCheckbox
+                        id={`kanban-prog-check-${t.id}`}
+                        checked={false}
+                        onChange={() => handleStatusChange(t, 'COMPLETED')}
+                        label={t.name}
+                        textStyle={{ fontWeight: 600, fontSize: '0.95rem' }}
+                      />
                       <span className={`badge badge-priority-${t.priority}`}>{t.priority}</span>
                     </div>
                     {t.description && <p className="kanban-card-desc">{t.description}</p>}
@@ -557,9 +570,13 @@ const Tasks = () => {
                 {completedTasks.map((t) => (
                   <div key={t.id} className="kanban-card" style={{ borderLeft: '3px solid #10b981' }}>
                     <div className="kanban-card-header">
-                      <h4 className="kanban-card-title" style={{ textDecoration: 'line-through', opacity: 0.85 }}>
-                        {t.name}
-                      </h4>
+                      <TaskCheckbox
+                        id={`kanban-comp-check-${t.id}`}
+                        checked={true}
+                        onChange={() => handleStatusChange(t, 'PENDING')}
+                        label={t.name}
+                        textStyle={{ fontWeight: 600, fontSize: '0.95rem' }}
+                      />
                       <span className={`badge badge-priority-${t.priority}`}>{t.priority}</span>
                     </div>
                     {t.description && <p className="kanban-card-desc">{t.description}</p>}
@@ -624,41 +641,14 @@ const Tasks = () => {
                 {sortedTasks.map((task) => (
                   <tr key={task.id}>
                     <td>
-                      <div className="checkbox-container">
-                        <input
-                          type="checkbox"
-                          id={`table-task-check-${task.id}`}
-                          className="task-checkbox"
-                          checked={task.status === 'COMPLETED'}
-                          onChange={() => handleStatusChange(task, task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED')}
-                        />
-                          <label
-                            htmlFor={`table-task-check-${task.id}`}
-                            className="checkbox-label"
-                            style={{ padding: 0 }}
-                            title={task.status === 'COMPLETED' ? 'Mark as Pending' : 'Mark as Completed'}
-                          >
-                            <div className="checkbox-box">
-                              <div className="checkbox-fill"></div>
-                              <div className="checkmark">
-                                <svg viewBox="0 0 24 24" className="check-icon">
-                                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
-                                </svg>
-                              </div>
-                              <div className="success-ripple"></div>
-                            </div>
-                            <div>
-                              <span className="checkbox-text" style={{ fontWeight: 600, color: 'var(--text-main)' }}>
-                                {task.name}
-                              </span>
-                              {task.description && (
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', maxWidth: '280px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                  {task.description}
-                                </div>
-                              )}
-                            </div>
-                          </label>
-                        </div>
+                      <TaskCheckbox
+                        id={`table-task-check-${task.id}`}
+                        checked={task.status === 'COMPLETED'}
+                        onChange={() => handleStatusChange(task, task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED')}
+                        label={task.name}
+                        subtext={task.description}
+                        textStyle={{ fontWeight: 600 }}
+                      />
                     </td>
                     <td>
                       {task.projectName ? (
