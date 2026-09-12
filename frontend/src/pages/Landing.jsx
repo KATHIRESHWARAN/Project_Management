@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import ToggleButton from '../components/ToggleButton';
+import Logo from '../components/Logo';
 
 const Landing = () => {
   const { isAuthenticated, user } = useAuth();
@@ -14,13 +15,8 @@ const Landing = () => {
       {/* SaaS Navbar */}
       <header className="landing-nav">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div className="sidebar-logo-icon" style={{ width: '36px', height: '36px', fontSize: '1.1rem' }}>
-            TF
-          </div>
-          <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
-            TaskForge
-          </span>
-          <span className="sidebar-badge" style={{ background: '#eef2ff', color: '#4f46e5' }}>SaaS</span>
+          <Logo size={36} />
+          <span className="sidebar-badge" style={{ background: 'rgba(99, 102, 241, 0.15)', color: '#6366f1', border: '1px solid rgba(99, 102, 241, 0.3)' }}>SaaS</span>
         </div>
 
         <nav className="landing-nav-links">
@@ -409,11 +405,8 @@ const Landing = () => {
       <footer className="landing-footer">
         <div className="footer-inner">
           <div style={{ maxWidth: '340px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem' }}>
-              <div className="sidebar-logo-icon" style={{ width: '32px', height: '32px', fontSize: '1rem' }}>
-                TF
-              </div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>TaskForge</span>
+            <div style={{ marginBottom: '0.75rem' }}>
+              <Logo size={32} />
             </div>
             <p style={{ fontSize: '0.875rem', lineHeight: 1.6, color: '#94a3b8' }}>
               Imagination -&gt; innovation-&gt;invention

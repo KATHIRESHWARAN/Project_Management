@@ -289,11 +289,12 @@ const ProjectDetails = () => {
 
       {/* Project Overview Card */}
       <div
+        className="card"
         style={{
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '16px',
           padding: '2rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
           marginBottom: '2rem',
         }}
@@ -608,9 +609,9 @@ const ProjectDetails = () => {
               </div>
               <div className="kanban-card-list">
                 {completedTasks.map((t) => (
-                  <div key={t.id} className="kanban-card" style={{ opacity: 0.9, borderLeft: '3px solid #10b981' }}>
+                  <div key={t.id} className="kanban-card" style={{ borderLeft: '3px solid #10b981' }}>
                     <div className="kanban-card-header">
-                      <h4 className="kanban-card-title" style={{ textDecoration: 'line-through', color: '#64748b' }}>
+                      <h4 className="kanban-card-title" style={{ textDecoration: 'line-through', opacity: 0.85 }}>
                         {t.name}
                       </h4>
                       <span className={`badge badge-priority-${t.priority}`}>{t.priority}</span>
@@ -682,33 +683,33 @@ const ProjectDetails = () => {
                           checked={task.status === 'COMPLETED'}
                           onChange={() => handleStatusChange(task, task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED')}
                         />
-                        <label
-                          htmlFor={`proj-task-check-${task.id}`}
-                          className="checkbox-label"
-                          style={{ padding: 0 }}
-                          title={task.status === 'COMPLETED' ? 'Mark as Pending' : 'Mark as Completed'}
-                        >
-                          <div className="checkbox-box">
-                            <div className="checkbox-fill"></div>
-                            <div className="checkmark">
-                              <svg viewBox="0 0 24 24" className="check-icon">
-                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
-                              </svg>
-                            </div>
-                            <div className="success-ripple"></div>
-                          </div>
-                          <div>
-                            <span className="checkbox-text" style={{ fontWeight: 600, color: 'var(--text-main)' }}>
-                              {task.name}
-                            </span>
-                            {task.description && (
-                              <div style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {task.description}
+                          <label
+                            htmlFor={`proj-task-check-${task.id}`}
+                            className="checkbox-label"
+                            style={{ padding: 0 }}
+                            title={task.status === 'COMPLETED' ? 'Mark as Pending' : 'Mark as Completed'}
+                          >
+                            <div className="checkbox-box">
+                              <div className="checkbox-fill"></div>
+                              <div className="checkmark">
+                                <svg viewBox="0 0 24 24" className="check-icon">
+                                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                                </svg>
                               </div>
-                            )}
-                          </div>
-                        </label>
-                      </div>
+                              <div className="success-ripple"></div>
+                            </div>
+                            <div>
+                              <span className="checkbox-text" style={{ fontWeight: 600, color: 'var(--text-main)' }}>
+                                {task.name}
+                              </span>
+                              {task.description && (
+                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                  {task.description}
+                                </div>
+                              )}
+                            </div>
+                          </label>
+                        </div>
                     </td>
                     <td>
                       <span className={`badge badge-priority-${task.priority}`}>

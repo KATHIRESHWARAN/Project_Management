@@ -49,6 +49,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
             <Link to={`/projects/${project.id}`}>{project.name}</Link>
           </h3>
         </div>
+
         <span className={`badge badge-status-${project.status}`}>
           {formatStatus(project.status)}
         </span>

@@ -2807,19 +2807,63 @@ select option {
 }
 
 /* ===================================================
-   COSMIC DARK THEME - CLEAN WEBSITE-BASED OBSIDIAN
+   DATE PICKER INPUT & CALENDAR ICON
+   =================================================== */
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.date-input-wrapper .date-picker-input {
+  width: 100%;
+  padding-right: 2.75rem !important;
+}
+
+.calendar-icon-btn {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6366f1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  z-index: 2;
+}
+
+.calendar-icon-btn:hover {
+  background-color: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  transform: translateY(-50%) scale(1.12);
+}
+
+/* ===================================================
+   COSMIC DARK THEME - CRISP, HIGH CONTRAST OBSIDIAN
+   (NO FAINT / WASHED OUT / LOW TRANSPARENCY TEXT)
    =================================================== */
 body.cosmic-theme {
   --bg-page: #0b0f19;
   --bg-surface: #111827;
   --bg-surface-secondary: #1f2937;
-  --text-main: #f8fafc;
-  --text-muted: #94a3af;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+  --text-light: #e2e8f0;
   --border-color: #374151;
   --border-light: #1f2937;
+  color: #ffffff;
+  background-color: #0b0f19;
   color-scheme: dark;
 }
 
+/* Solid non-transparent cards in Dark Mode */
 body.cosmic-theme .project-card,
 body.cosmic-theme .task-card,
 body.cosmic-theme .stat-card,
@@ -2831,43 +2875,107 @@ body.cosmic-theme .table-card,
 body.cosmic-theme .kanban-column {
   background-color: #111827 !important;
   border-color: #374151 !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 body.cosmic-theme .project-card:hover,
 body.cosmic-theme .task-card:hover,
 body.cosmic-theme .stat-card:hover,
 body.cosmic-theme .analytics-card:hover {
-  border-color: #4f46e5 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
 }
 
+/* Headings & High Contrast Text */
 body.cosmic-theme .card-title,
+body.cosmic-theme .card-title a,
 body.cosmic-theme .stat-value,
 body.cosmic-theme .analytics-card-title,
 body.cosmic-theme .gauge-percent,
-body.cosmic-theme .auth-pill-heading {
+body.cosmic-theme .auth-pill-heading,
+body.cosmic-theme .page-title,
+body.cosmic-theme h1,
+body.cosmic-theme h2,
+body.cosmic-theme h3,
+body.cosmic-theme h4 {
   color: #ffffff !important;
 }
 
+/* Crisp readable secondary content - NO FAINT/TRANSPARENT TEXT */
 body.cosmic-theme .card-description,
 body.cosmic-theme .stat-label,
+body.cosmic-theme .page-subtitle,
 body.cosmic-theme .analytics-card-subtitle,
-body.cosmic-theme .auth-pill-subtitle {
-  color: #9ca3af !important;
+body.cosmic-theme .auth-pill-subtitle,
+body.cosmic-theme .section-desc,
+body.cosmic-theme .landing-subtitle {
+  color: #cbd5e1 !important;
+  opacity: 1 !important;
 }
 
+/* Card meta & date rows */
+body.cosmic-theme .card-meta-row,
+body.cosmic-theme .card-meta-row span,
+body.cosmic-theme .progress-header,
+body.cosmic-theme .progress-header span {
+  color: #cbd5e1 !important;
+  border-top-color: #374151 !important;
+}
+
+body.cosmic-theme .progress-bar-bg {
+  background-color: #1e293b !important;
+}
+
+/* Form Controls & Inputs */
+body.cosmic-theme .form-label,
+body.cosmic-theme .auth-pill-label {
+  color: #f8fafc !important;
+  font-weight: 600 !important;
+}
+
+body.cosmic-theme .form-hint {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme input:not([type="checkbox"]):not([type="radio"]),
+body.cosmic-theme textarea,
+body.cosmic-theme input.form-control,
+body.cosmic-theme textarea.form-control,
+body.cosmic-theme .search-input-wrapper input,
 body.cosmic-theme .auth-pill-input {
-  background-color: #0f172a !important;
-  border-color: #374151 !important;
+  background-color: #1e293b !important;
   color: #ffffff !important;
+  border-color: #334155 !important;
+  background-image: none !important;
 }
 
+body.cosmic-theme input::placeholder,
+body.cosmic-theme textarea::placeholder,
+body.cosmic-theme .search-input-wrapper input::placeholder {
+  color: #94a3b8 !important;
+}
+
+body.cosmic-theme input:focus,
+body.cosmic-theme textarea:focus,
+body.cosmic-theme .form-control:focus,
+body.cosmic-theme .search-input-wrapper input:focus,
 body.cosmic-theme .auth-pill-input:focus {
   border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3) !important;
 }
 
+/* Calendar Button in Dark Mode */
+body.cosmic-theme .calendar-icon-btn {
+  color: #818cf8 !important;
+}
+
+body.cosmic-theme .calendar-icon-btn:hover {
+  background-color: rgba(129, 140, 248, 0.2) !important;
+  color: #a5b4fc !important;
+}
+
+/* Sidebar & Navbar */
 body.cosmic-theme .sidebar {
   background-color: #0f172a !important;
   border-right-color: #1f2937 !important;
@@ -2878,12 +2986,55 @@ body.cosmic-theme .sidebar {
 body.cosmic-theme .navbar {
   background-color: #111827 !important;
   border-color: #374151 !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5) !important;
 }
 
+body.cosmic-theme .desktop-date-pill {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .user-name {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .user-email {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .sidebar-footer {
+  color: #94a3b8 !important;
+  border-top-color: #1f2937 !important;
+}
+
+body.cosmic-theme .sidebar-user-name {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .sidebar-user-email {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .sidebar-user-role {
+  color: #94a3b8 !important;
+}
+
+body.cosmic-theme .nav-link {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .nav-link:hover {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .nav-link.active {
+  color: #ffffff !important;
+  background: rgba(99, 102, 241, 0.22) !important;
+}
+
+/* Secondary Buttons */
 body.cosmic-theme .btn-secondary {
   background-color: #1f2937 !important;
   border-color: #374151 !important;
@@ -2893,33 +3044,17 @@ body.cosmic-theme .btn-secondary {
 body.cosmic-theme .btn-secondary:hover:not(:disabled) {
   background-color: #374151 !important;
   border-color: #4b5563 !important;
+  color: #ffffff !important;
 }
 
-body.cosmic-theme .custom-table th {
-  background-color: #1f2937 !important;
-  color: #94a3af !important;
-}
-
-body.cosmic-theme .custom-table td {
-  border-color: #1f2937 !important;
-  color: #f3f4f6 !important;
-}
-
-body.cosmic-theme .custom-table tbody tr:hover {
-  background-color: #1f2937 !important;
-}
-
-/* ===================================================
-   ENHANCED DARK THEME SELECT & DROPDOWN PROPERTIES
-   =================================================== */
-/* Only dropdown selects receive the dropdown chevron icon with no-repeat */
+/* Enhanced Dropdown / Select properties in Dark Mode */
 body.cosmic-theme .filter-select,
 body.cosmic-theme select,
 body.cosmic-theme select.form-control {
   background-color: #1e293b !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
   border-color: #334155 !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 0.75rem center !important;
   background-size: 14px 14px !important;
@@ -2929,48 +3064,11 @@ body.cosmic-theme select.form-control {
   padding-right: 2.2rem !important;
 }
 
-/* CRITICAL: Explicitly style dropdown options so content is visible by default in dark mode */
 body.cosmic-theme select option,
 body.cosmic-theme .filter-select option,
 body.cosmic-theme select.form-control option {
   background-color: #1e293b !important;
-  color: #f8fafc !important;
-}
-
-body.cosmic-theme .filter-select:focus,
-body.cosmic-theme select:focus,
-body.cosmic-theme select.form-control:focus,
-body.cosmic-theme .form-control:focus,
-body.cosmic-theme .search-input-wrapper input:focus {
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
-}
-
-/* Text boxes, textareas, search inputs: explicitly prevent any chevron background-image */
-input:not([type="checkbox"]):not([type="radio"]),
-textarea,
-input.form-control,
-textarea.form-control,
-.search-input-wrapper input {
-  background-image: none !important;
-}
-
-body.cosmic-theme input:not([type="checkbox"]):not([type="radio"]),
-body.cosmic-theme textarea,
-body.cosmic-theme input.form-control,
-body.cosmic-theme textarea.form-control,
-body.cosmic-theme .search-input-wrapper input,
-body.cosmic-theme .auth-pill-input {
-  background-color: #1e293b !important;
-  color: #f8fafc !important;
-  border-color: #334155 !important;
-  background-image: none !important;
-}
-
-body.cosmic-theme input::placeholder,
-body.cosmic-theme textarea::placeholder,
-body.cosmic-theme .search-input-wrapper input::placeholder {
-  color: #64748b !important;
+  color: #ffffff !important;
 }
 
 /* View Switcher in Dark Mode */
@@ -2980,12 +3078,12 @@ body.cosmic-theme .view-switcher-group {
 }
 
 body.cosmic-theme .view-btn {
-  color: #94a3b8 !important;
+  color: #cbd5e1 !important;
 }
 
 body.cosmic-theme .view-btn.active {
   background-color: #1e293b !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -3011,35 +3109,38 @@ body.cosmic-theme .kanban-column-completed {
 }
 
 body.cosmic-theme .kanban-column-title {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
 
 body.cosmic-theme .kanban-column-badge {
   background-color: #1f2937 !important;
-  color: #cbd5e1 !important;
+  color: #e2e8f0 !important;
 }
 
 body.cosmic-theme .kanban-card {
   background-color: #1e293b !important;
   border-color: #334155 !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 body.cosmic-theme .kanban-card:hover {
   border-color: #6366f1 !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
 }
 
 body.cosmic-theme .kanban-card-title {
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 body.cosmic-theme .kanban-card-desc {
-  color: #94a3af !important;
+  color: #e2e8f0 !important;
+  opacity: 1 !important;
 }
 
 body.cosmic-theme .kanban-card-meta {
-  color: #64748b !important;
+  color: #cbd5e1 !important;
   border-top: 1px solid #334155 !important;
 }
 
@@ -3058,9 +3159,9 @@ body.cosmic-theme .kanban-move-btn:hover {
   color: #ffffff !important;
 }
 
-/* Modals & Dialogs in Dark Mode (Pure obsidian, NO white footers!) */
+/* Modals & Dialogs in Dark Mode (Pure obsidian, NO white backgrounds) */
 body.cosmic-theme .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.78) !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -3068,8 +3169,8 @@ body.cosmic-theme .modal-overlay {
 body.cosmic-theme .modal-dialog {
   background-color: #111827 !important;
   border-color: #374151 !important;
-  color: #f8fafc !important;
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.85) !important;
 }
 
 body.cosmic-theme .modal-header {
@@ -3079,7 +3180,7 @@ body.cosmic-theme .modal-header {
 
 body.cosmic-theme .modal-body {
   background-color: #111827 !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 body.cosmic-theme .modal-footer {
@@ -3089,7 +3190,7 @@ body.cosmic-theme .modal-footer {
 
 body.cosmic-theme .confirm-modal-body {
   background-color: #111827 !important;
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 body.cosmic-theme .modal-title,
@@ -3098,7 +3199,7 @@ body.cosmic-theme .confirm-modal-title {
 }
 
 body.cosmic-theme .confirm-modal-message {
-  color: #9ca3af !important;
+  color: #e2e8f0 !important;
 }
 
 body.cosmic-theme input[type="date"] {
@@ -3106,12 +3207,12 @@ body.cosmic-theme input[type="date"] {
 }
 
 body.cosmic-theme input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.85);
+  filter: invert(0.9);
   cursor: pointer;
 }
 
 body.cosmic-theme .btn-icon {
-  color: #94a3af !important;
+  color: #cbd5e1 !important;
 }
 
 body.cosmic-theme .btn-icon:hover {
@@ -3119,25 +3220,115 @@ body.cosmic-theme .btn-icon:hover {
   color: #ffffff !important;
 }
 
-/* Data Tables in Dark Mode */
-body.cosmic-theme .table-responsive {
+/* Data Tables in Dark Mode - High Contrast */
+body.cosmic-theme .table-responsive,
+body.cosmic-theme .custom-table {
   background-color: #111827 !important;
   border-color: #374151 !important;
 }
 
+body.cosmic-theme .custom-table th,
 body.cosmic-theme .data-table th {
-  background-color: #1f2937 !important;
-  color: #94a3af !important;
-  border-bottom-color: #374151 !important;
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid #374151 !important;
 }
 
+body.cosmic-theme .custom-table td,
 body.cosmic-theme .data-table td {
-  border-bottom-color: #1f2937 !important;
-  color: #f3f4f6 !important;
+  border-color: #1f2937 !important;
+  color: #ffffff !important;
 }
 
+body.cosmic-theme .custom-table tbody tr:hover,
 body.cosmic-theme .data-table tbody tr:hover {
   background-color: #1e293b !important;
+}
+
+body.cosmic-theme .checkbox-text {
+  color: #ffffff !important;
+}
+
+/* Landing Page in Dark Mode - Zero Bleed / High Contrast */
+body.cosmic-theme .landing-page {
+  background-color: #0b0f19 !important;
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .landing-nav {
+  background-color: #111827 !important;
+  border-bottom-color: #1f2937 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.cosmic-theme .landing-nav-link {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .landing-nav-link:hover {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .landing-title {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .features-section {
+  background-color: #0d121f !important;
+  border-color: #1f2937 !important;
+}
+
+body.cosmic-theme .feature-box {
+  background-color: #111827 !important;
+  border-color: #374151 !important;
+}
+
+body.cosmic-theme .feature-title {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .feature-text {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .workflow-section {
+  background-color: #0b0f19 !important;
+}
+
+body.cosmic-theme .workflow-step-num {
+  color: #334155 !important;
+}
+
+body.cosmic-theme .workflow-step-title {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .workflow-step-desc {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .landing-preview-window {
+  background: #111827 !important;
+  border-color: #374151 !important;
+}
+
+body.cosmic-theme .preview-window-content {
+  background-color: #0f172a !important;
+}
+
+body.cosmic-theme .preview-window-content h3 {
+  color: #ffffff !important;
+}
+
+body.cosmic-theme .preview-window-content p {
+  color: #cbd5e1 !important;
+}
+
+body.cosmic-theme .landing-footer {
+  background-color: #070a12 !important;
+  border-top-color: #1f2937 !important;
 }
 
 /* Sleek Dark Scrollbars */
@@ -3155,6 +3346,7 @@ body.cosmic-theme ::-webkit-scrollbar-thumb {
 body.cosmic-theme ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+
 
 
 

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 
 export const useTheme = () => {
   const [isCosmic, setIsCosmic] = useState(() => {
-    return localStorage.getItem('taskforge_cosmic_theme') === 'true';
+    const saved = localStorage.getItem('taskforge_cosmic_theme');
+    return saved !== null ? saved === 'true' : true; // Default to Dark Mode
   });
 
   useEffect(() => {
@@ -14,7 +15,8 @@ export const useTheme = () => {
     }
 
     const handleSync = () => {
-      const active = localStorage.getItem('taskforge_cosmic_theme') === 'true';
+      const saved = localStorage.getItem('taskforge_cosmic_theme');
+      const active = saved !== null ? saved === 'true' : true;
       setIsCosmic(active);
       if (active) {
         document.body.classList.add('cosmic-theme');

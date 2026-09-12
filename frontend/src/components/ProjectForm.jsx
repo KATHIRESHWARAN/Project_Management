@@ -141,30 +141,78 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
                 <label className="form-label" htmlFor="project-startDate">
                   Start Date
                 </label>
-                <input
-                  type="date"
-                  id="project-startDate"
-                  name="startDate"
-                  className="form-control"
-                  value={formData.startDate}
-                  onChange={handleChange}
-                  disabled={loading}
-                />
+                <div className="date-input-wrapper">
+                  <input
+                    type="date"
+                    id="project-startDate"
+                    name="startDate"
+                    className="form-control date-picker-input"
+                    value={formData.startDate}
+                    onChange={handleChange}
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className="calendar-icon-btn"
+                    tabIndex={-1}
+                    onClick={(e) => {
+                      const input = e.currentTarget.previousElementSibling;
+                      if (input && typeof input.showPicker === 'function') {
+                        try { input.showPicker(); } catch (err) { input.focus(); }
+                      } else if (input) {
+                        input.focus();
+                      }
+                    }}
+                    title="Open calendar"
+                    aria-label="Open start date calendar"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="18" y2="10"></line>
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               <div className="form-group">
                 <label className="form-label" htmlFor="project-endDate">
                   Target End Date
                 </label>
-                <input
-                  type="date"
-                  id="project-endDate"
-                  name="endDate"
-                  className="form-control"
-                  value={formData.endDate}
-                  onChange={handleChange}
-                  disabled={loading}
-                />
+                <div className="date-input-wrapper">
+                  <input
+                    type="date"
+                    id="project-endDate"
+                    name="endDate"
+                    className="form-control date-picker-input"
+                    value={formData.endDate}
+                    onChange={handleChange}
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className="calendar-icon-btn"
+                    tabIndex={-1}
+                    onClick={(e) => {
+                      const input = e.currentTarget.previousElementSibling;
+                      if (input && typeof input.showPicker === 'function') {
+                        try { input.showPicker(); } catch (err) { input.focus(); }
+                      } else if (input) {
+                        input.focus();
+                      }
+                    }}
+                    title="Open calendar"
+                    aria-label="Open end date calendar"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="18" y2="10"></line>
+                    </svg>
+                  </button>
+                </div>
                 {errors.endDate && <span className="form-error-text">{errors.endDate}</span>}
               </div>
             </div>

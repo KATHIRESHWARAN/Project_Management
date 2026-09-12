@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import ToggleButton from '../components/ToggleButton';
 import ErrorMessage from '../components/ErrorMessage';
+import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -84,10 +85,8 @@ const Login = () => {
       <div className="auth-pill-container">
         {/* Brand Logo Icon */}
         <div className="auth-pill-logo">
-          <Link to="/" title="TaskForge Home">
-            <div className="sidebar-logo-icon" style={{ width: '42px', height: '42px', borderRadius: '14px', fontSize: '1.2rem' }}>
-              TF
-            </div>
+          <Link to="/" title="TaskForge Home" style={{ display: 'inline-block' }}>
+            <Logo size={46} showText={false} />
           </Link>
         </div>
 

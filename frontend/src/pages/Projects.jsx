@@ -338,17 +338,19 @@ const Projects = () => {
                   return (
                     <tr key={project.id}>
                       <td>
-                        <Link
-                          to={`/projects/${project.id}`}
-                          style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.95rem' }}
-                        >
-                          {project.name}
-                        </Link>
-                        {project.description && (
-                          <div style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '340px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {project.description}
-                          </div>
-                        )}
+                        <div>
+                          <Link
+                            to={`/projects/${project.id}`}
+                            style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.95rem' }}
+                          >
+                            {project.name}
+                          </Link>
+                          {project.description && (
+                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', maxWidth: '340px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              {project.description}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td>
                         <span className={`badge badge-status-${project.status}`}>

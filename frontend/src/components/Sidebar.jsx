@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import Logo from './Logo';
 
 const Sidebar = ({ isOpen, onClose }) => {
   return (
@@ -9,11 +10,8 @@ const Sidebar = ({ isOpen, onClose }) => {
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
-            <div className="sidebar-logo-icon">TF</div>
-            <div className="sidebar-logo-text">
-              TaskForge
-              <span className="sidebar-badge">SaaS</span>
-            </div>
+            <Logo size={36} showText={true} />
+            <span className="sidebar-badge">SaaS</span>
           </Link>
         </div>
 

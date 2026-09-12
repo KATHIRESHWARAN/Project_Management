@@ -47,7 +47,7 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
       className="task-card"
       id={`task-card-${task.id}`}
       style={{
-        opacity: isCompleted ? 0.8 : 1,
+        opacity: 1,
         borderLeft: `5px solid ${
           task.priority === 'HIGH'
             ? '#ef4444'
@@ -93,7 +93,7 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
           </label>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <span className={`badge badge-priority-${task.priority}`}>
             {formatPriority(task.priority)}
           </span>
