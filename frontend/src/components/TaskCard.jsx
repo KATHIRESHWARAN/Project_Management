@@ -1,7 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
-  const isCompleted = task.status === 'COMPLETED';
+  const [localStatus, setLocalStatus] = React.useState(task.status);
+
+  React.useEffect(() => {
+    setLocalStatus(task.status);
+  }, [task.status]);
+
+  const isCompleted = localStatus === 'COMPLETED';
 
   const formatPriority = (p) => {
     switch (p) {
@@ -31,6 +38,7 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
 
   const toggleStatus = () => {
     const nextStatus = isCompleted ? 'PENDING' : 'COMPLETED';
+    setLocalStatus(nextStatus);
     onStatusChange(task, nextStatus);
   };
 
@@ -39,61 +47,58 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
       className="task-card"
       id={`task-card-${task.id}`}
       style={{
-        opacity: isCompleted ? 0.85 : 1,
-        borderLeft: `4px solid ${
+        opacity: isCompleted ? 0.8 : 1,
+        borderLeft: `5px solid ${
           task.priority === 'HIGH'
             ? '#ef4444'
             : task.priority === 'MEDIUM'
             ? '#f59e0b'
-            : '#38bdf8'
+            : '#0284c7'
+        }`,
+        boxShadow: `inset 4px 0 14px -3px ${
+          task.priority === 'HIGH'
+            ? 'rgba(239, 68, 68, 0.35)'
+            : task.priority === 'MEDIUM'
+            ? 'rgba(245, 158, 11, 0.35)'
+            : 'rgba(2, 132, 199, 0.35)'
         }`,
       }}
     >
       <div className="card-header-row">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <button
-            type="button"
-            onClick={toggleStatus}
-            style={{
-              width: '20px',
-              height: '20px',
-              borderRadius: '4px',
-              border: `2px solid ${isCompleted ? '#10b981' : '#cbd5e1'}`,
-              backgroundColor: isCompleted ? '#10b981' : '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#ffffff',
-              flexShrink: 0,
-            }}
+        <div className="checkbox-container">
+          <input
+            type="checkbox"
+            id={`task-check-${task.id}`}
+            className="task-checkbox"
+            checked={isCompleted}
+            onChange={toggleStatus}
+          />
+          <label
+            htmlFor={`task-check-${task.id}`}
+            className="checkbox-label"
             title={isCompleted ? 'Mark as Pending' : 'Mark as Completed'}
-            aria-label="Toggle task completion"
           >
-            {isCompleted && (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            )}
-          </button>
-          <h4
-            className="card-title"
-            style={{
-              textDecoration: isCompleted ? 'line-through' : 'none',
-              color: isCompleted ? '#64748b' : 'inherit',
-              fontSize: '1.05rem',
-            }}
-          >
-            {task.name}
-          </h4>
+            <div className="checkbox-box">
+              <div className="checkbox-fill"></div>
+              <div className="checkmark">
+                <svg viewBox="0 0 24 24" className="check-icon">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                </svg>
+              </div>
+              <div className="success-ripple"></div>
+            </div>
+            <span className="checkbox-text" style={{ fontSize: '1.05rem', fontWeight: 700 }}>
+              {task.name}
+            </span>
+          </label>
         </div>
 
         <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
           <span className={`badge badge-priority-${task.priority}`}>
             {formatPriority(task.priority)}
           </span>
-          <span className={`badge badge-status-${task.status}`}>
-            {formatStatus(task.status)}
+          <span className={`badge badge-status-${localStatus}`}>
+            {formatStatus(localStatus)}
           </span>
         </div>
       </div>
@@ -112,9 +117,12 @@ const TaskCard = ({ task, onEdit, onDelete, onStatusChange }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <span>📅 Due: {task.dueDate || 'No due date'}</span>
           {task.projectName && (
-            <span style={{ color: '#6366f1', fontWeight: 500 }}>
+            <Link
+              to={`/projects/${task.projectId}`}
+              style={{ color: '#4f46e5', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+            >
               📁 {task.projectName}
-            </span>
+            </Link>
           )}
         </div>
 

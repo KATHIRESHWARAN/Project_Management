@@ -93,10 +93,11 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
                 id="project-name"
                 name="name"
                 className="form-control"
-                placeholder="e.g. Website Redesign"
+                placeholder="e.g. Mobile App Redesign"
                 value={formData.name}
                 onChange={handleChange}
                 disabled={loading}
+                autoFocus
               />
               {errors.name && <span className="form-error-text">{errors.name}</span>}
             </div>
@@ -110,7 +111,7 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
                 name="description"
                 className="form-control"
                 rows="3"
-                placeholder="Briefly describe the goals and scope of this project..."
+                placeholder="Key goals, deliverables, and specifications..."
                 value={formData.description}
                 onChange={handleChange}
                 disabled={loading}
@@ -119,7 +120,7 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
 
             <div className="form-group">
               <label className="form-label" htmlFor="project-status">
-                Status
+                Execution Status
               </label>
               <select
                 id="project-status"
@@ -153,7 +154,7 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
 
               <div className="form-group">
                 <label className="form-label" htmlFor="project-endDate">
-                  End Date
+                  Target End Date
                 </label>
                 <input
                   type="date"
@@ -184,7 +185,14 @@ const ProjectForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               disabled={loading}
               id="submit-project-btn"
             >
-              {loading ? (initialData ? 'Updating...' : 'Creating...') : initialData ? 'Save Changes' : 'Create Project'}
+              {loading ? (
+                <>
+                  <span className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px', borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#ffffff' }}></span>
+                  <span>{initialData ? 'Updating...' : 'Creating...'}</span>
+                </>
+              ) : (
+                initialData ? 'Save Changes' : 'Create Project'
+              )}
             </button>
           </div>
         </form>

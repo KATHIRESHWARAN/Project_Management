@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, onClose }) => {
   return (
@@ -8,11 +8,18 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo-icon">TF</div>
-          <span className="sidebar-logo-text">TaskForge</span>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
+            <div className="sidebar-logo-icon">TF</div>
+            <div className="sidebar-logo-text">
+              TaskForge
+              <span className="sidebar-badge">SaaS</span>
+            </div>
+          </Link>
         </div>
 
         <nav className="sidebar-nav">
+          <div className="sidebar-section-title">Core Workspace</div>
+
           <NavLink
             to="/dashboard"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
@@ -52,11 +59,42 @@ const Sidebar = ({ isOpen, onClose }) => {
             </svg>
             All Tasks
           </NavLink>
+
+          <div className="sidebar-section-title" style={{ marginTop: '1rem' }}>Account</div>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            onClick={onClose}
+            id="nav-profile-link"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profile & Settings
+          </NavLink>
+
+          <Link
+            to="/"
+            className="nav-link"
+            onClick={onClose}
+            style={{ marginTop: 'auto', opacity: 0.8 }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Home / Landing
+          </Link>
         </nav>
 
         <div className="sidebar-footer">
-          <p>Project Management System</p>
-          <span style={{ fontSize: '0.75rem', opacity: 0.7 }}>v1.0.0 • React + Express + MySQL</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontWeight: 600, color: '#e2e8f0' }}>TaskForge Platform</span>
+            <span style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 700 }}>● ONLINE</span>
+          </div>
+          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Imagination -&gt; Innovation -&gt; Invention</span>
         </div>
       </aside>
     </>

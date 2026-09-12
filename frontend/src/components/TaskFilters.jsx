@@ -8,20 +8,40 @@ const TaskFilters = ({
   onStatusChange,
   priority,
   onPriorityChange,
+  projects = null,
+  selectedProject = '',
+  onProjectChange = null,
   onReset,
 }) => {
-  const hasActiveFilters = search || status || priority;
+  const hasActiveFilters = search || status || priority || selectedProject;
 
   return (
     <div className="toolbar-container">
       <SearchBar
         value={search}
         onChange={onSearchChange}
-        placeholder="Search tasks by name..."
+        placeholder="Search tasks by title or keyword..."
         id="task-search-input"
       />
 
       <div className="filters-group">
+        {/* Optional Project Filter */}
+        {projects && onProjectChange && (
+          <select
+            id="task-filter-project"
+            className="filter-select"
+            value={selectedProject}
+            onChange={(e) => onProjectChange(e.target.value)}
+          >
+            <option value="">All Projects</option>
+            {projects.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        )}
+
         <select
           id="task-filter-status"
           className="filter-select"
@@ -52,6 +72,7 @@ const TaskFilters = ({
             onClick={onReset}
             className="btn btn-secondary btn-sm"
             title="Reset filters"
+            id="reset-task-filters-btn"
           >
             Reset
           </button>

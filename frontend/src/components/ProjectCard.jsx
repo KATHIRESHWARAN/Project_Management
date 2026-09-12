@@ -25,23 +25,44 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
   return (
     <div className="project-card" id={`project-card-${project.id}`}>
       <div className="card-header-row">
-        <h3 className="card-title">
-          <Link to={`/projects/${project.id}`}>{project.name}</Link>
-        </h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div
+            className="project-icon-badge"
+            style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '10px',
+              background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(99, 102, 241, 0.2))',
+              color: '#4f46e5',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.1rem',
+              boxShadow: '0 2px 8px rgba(79, 70, 229, 0.15)',
+              transform: 'translateZ(20px)',
+              flexShrink: 0,
+            }}
+          >
+            📁
+          </div>
+          <h3 className="card-title">
+            <Link to={`/projects/${project.id}`}>{project.name}</Link>
+          </h3>
+        </div>
         <span className={`badge badge-status-${project.status}`}>
           {formatStatus(project.status)}
         </span>
       </div>
 
       <p className="card-description">
-        {project.description || 'No description provided.'}
+        {project.description || 'No detailed scope provided for this project.'}
       </p>
 
-      {/* Progress Bar */}
+      {/* Progress Bar with Percentage */}
       <div className="progress-container">
         <div className="progress-header">
-          <span>Progress</span>
-          <span>
+          <span>Delivery Progress</span>
+          <span style={{ color: progress === 100 ? '#10b981' : '#4f46e5' }}>
             {project.completedTaskCount || 0} / {project.taskCount || 0} Tasks ({progress}%)
           </span>
         </div>
@@ -54,7 +75,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
           <span>
             🗓️ {project.startDate ? project.startDate : 'No start'} →{' '}
-            {project.endDate ? project.endDate : 'No deadline'}
+            {project.endDate ? project.endDate : 'Open deadline'}
           </span>
         </div>
 
@@ -62,9 +83,9 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
           <Link
             to={`/projects/${project.id}`}
             className="btn btn-secondary btn-sm"
-            title="View project tasks and details"
+            title="Open project workspace"
           >
-            View
+            Open
           </Link>
           <button
             type="button"

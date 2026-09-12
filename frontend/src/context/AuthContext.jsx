@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { authService } from '../services/api';
+import { authService, dashboardService, projectService, taskService } from '../services/api';
 
 export const AuthContext = createContext(null);
 
@@ -24,6 +24,16 @@ export const AuthProvider = ({ children }) => {
           if (res.data && res.data.data) {
             setUser(res.data.data);
             localStorage.setItem('user', JSON.stringify(res.data.data));
+            // Pre-warm caches for instantaneous 0ms navigation across Dashboard, Projects, and Tasks
+            dashboardService.getStats().then((r) => {
+              if (r.data?.data) sessionStorage.setItem('taskforge_dashboard_stats', JSON.stringify(r.data.data));
+            }).catch(() => {});
+            projectService.getAll().then((r) => {
+              if (r.data?.data) sessionStorage.setItem('taskforge_projects_cache', JSON.stringify(r.data.data));
+            }).catch(() => {});
+            taskService.getAll().then((r) => {
+              if (r.data?.data) sessionStorage.setItem('taskforge_tasks_cache', JSON.stringify(r.data.data));
+            }).catch(() => {});
           }
         } catch (error) {
           console.warn('[Auth] Session check failed, clearing state.');
@@ -64,6 +74,17 @@ export const AuthProvider = ({ children }) => {
 
       setUser(loggedInUser);
       setToken(authToken);
+
+      // Pre-warm caches immediately so Dashboard, Projects, and Tasks display in 0ms
+      dashboardService.getStats().then((r) => {
+        if (r.data?.data) sessionStorage.setItem('taskforge_dashboard_stats', JSON.stringify(r.data.data));
+      }).catch(() => {});
+      projectService.getAll().then((r) => {
+        if (r.data?.data) sessionStorage.setItem('taskforge_projects_cache', JSON.stringify(r.data.data));
+      }).catch(() => {});
+      taskService.getAll().then((r) => {
+        if (r.data?.data) sessionStorage.setItem('taskforge_tasks_cache', JSON.stringify(r.data.data));
+      }).catch(() => {});
 
       return { success: true, data: loggedInUser };
     } catch (error) {
@@ -110,6 +131,9 @@ export const AuthProvider = ({ children }) => {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      sessionStorage.removeItem('taskforge_dashboard_stats');
+      sessionStorage.removeItem('taskforge_projects_cache');
+      sessionStorage.removeItem('taskforge_tasks_cache');
       setUser(null);
       setToken(null);
     }

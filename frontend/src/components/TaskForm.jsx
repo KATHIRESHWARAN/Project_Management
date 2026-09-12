@@ -47,7 +47,7 @@ const TaskForm = ({
     }
     setErrors({});
     setFormError('');
-  }, [isOpen, initialData, fixedProjectId]);
+  }, [isOpen, initialData, fixedProjectId, projects]);
 
   if (!isOpen) return null;
 
@@ -68,7 +68,7 @@ const TaskForm = ({
       newErrors.name = 'Task name is required';
     }
     if (!effectiveProjectId) {
-      newErrors.projectId = 'Please select a project';
+      newErrors.projectId = 'Please select an assigned project';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -118,6 +118,7 @@ const TaskForm = ({
                 <span>{formError}</span>
               </div>
             )}
+
             {!fixedProjectId && projects.length > 0 && !initialData && (
               <div className="form-group">
                 <label className="form-label" htmlFor="task-projectId">
@@ -131,7 +132,7 @@ const TaskForm = ({
                   onChange={handleChange}
                   disabled={loading}
                 >
-                  <option value="">Select a project...</option>
+                  <option value="">Select an initiative...</option>
                   {projects.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
@@ -146,17 +147,18 @@ const TaskForm = ({
 
             <div className="form-group">
               <label className="form-label" htmlFor="task-name">
-                Task Name *
+                Task Title *
               </label>
               <input
                 type="text"
                 id="task-name"
                 name="name"
                 className="form-control"
-                placeholder="e.g. Design Login Wireframe"
+                placeholder="e.g. Implement OAuth Flow"
                 value={formData.name}
                 onChange={handleChange}
                 disabled={loading}
+                autoFocus
               />
               {errors.name && <span className="form-error-text">{errors.name}</span>}
             </div>
@@ -170,7 +172,7 @@ const TaskForm = ({
                 name="description"
                 className="form-control"
                 rows="3"
-                placeholder="Specific instructions or acceptance criteria..."
+                placeholder="Clear instructions, acceptance criteria, or notes..."
                 value={formData.description}
                 onChange={handleChange}
                 disabled={loading}
@@ -180,7 +182,7 @@ const TaskForm = ({
             <div className="form-grid-2">
               <div className="form-group">
                 <label className="form-label" htmlFor="task-priority">
-                  Priority
+                  Urgency / Priority
                 </label>
                 <select
                   id="task-priority"
@@ -198,7 +200,7 @@ const TaskForm = ({
 
               <div className="form-group">
                 <label className="form-label" htmlFor="task-status">
-                  Status
+                  Lifecycle Status
                 </label>
                 <select
                   id="task-status"
@@ -217,7 +219,7 @@ const TaskForm = ({
 
             <div className="form-group">
               <label className="form-label" htmlFor="task-dueDate">
-                Due Date
+                Target Due Date
               </label>
               <input
                 type="date"
@@ -246,7 +248,14 @@ const TaskForm = ({
               disabled={loading}
               id="submit-task-btn"
             >
-              {loading ? (initialData ? 'Updating...' : 'Creating...') : initialData ? 'Save Changes' : 'Create Task'}
+              {loading ? (
+                <>
+                  <span className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px', borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#ffffff' }}></span>
+                  <span>{initialData ? 'Updating...' : 'Creating...'}</span>
+                </>
+              ) : (
+                initialData ? 'Save Changes' : 'Create Task'
+              )}
             </button>
           </div>
         </form>

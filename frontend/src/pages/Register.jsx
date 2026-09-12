@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
+import ToggleButton from '../components/ToggleButton';
 import ErrorMessage from '../components/ErrorMessage';
 
 const Register = () => {
   const navigate = useNavigate();
   const { register, isAuthenticated } = useAuth();
+  const { isCosmic, toggleTheme } = useTheme();
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -14,6 +17,8 @@ const Register = () => {
     confirmPassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,113 +91,180 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-page-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <div className="auth-logo">
-            <div className="sidebar-logo-icon" style={{ width: '42px', height: '42px', fontSize: '1.25rem' }}>
+    <div className="auth-pill-page">
+      {/* Top Right Corner Theme Toggle */}
+      <div className="auth-top-corner-toggle">
+        <ToggleButton
+          id="register-top-theme-toggle"
+          checked={isCosmic}
+          onChange={toggleTheme}
+          title={isCosmic ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        />
+      </div>
+
+      <div className="auth-pill-container" style={{ maxWidth: '430px' }}>
+        {/* Brand Logo Icon */}
+        <div className="auth-pill-logo">
+          <Link to="/" title="TaskForge Home">
+            <div className="sidebar-logo-icon" style={{ width: '42px', height: '42px', borderRadius: '14px', fontSize: '1.2rem' }}>
               TF
             </div>
-            <span className="sidebar-logo-text" style={{ color: '#0f172a', fontSize: '1.5rem' }}>
-              TaskForge
-            </span>
-          </div>
-          <h1 className="auth-title">Create an Account</h1>
-          <p className="auth-subtitle">Start organizing your projects and workflows today</p>
+          </Link>
+        </div>
+
+        <div className="auth-pill-heading">Create Account</div>
+
+        <div className="auth-pill-subtitle">
+          Start organizing your projects and workflows today
         </div>
 
         {apiError && <ErrorMessage message={apiError} onDismiss={() => setApiError('')} />}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label" htmlFor="register-fullName">
-              Full Name *
-            </label>
-            <input
-              type="text"
-              id="register-fullName"
-              name="fullName"
-              className="form-control"
-              placeholder="e.g. Alex Morgan"
-              value={formData.fullName}
-              onChange={handleChange}
-              disabled={loading}
-              autoComplete="name"
-            />
-            {errors.fullName && <span className="form-error-text">{errors.fullName}</span>}
-          </div>
+        <form onSubmit={handleSubmit} className="auth-pill-form" noValidate>
+          <label className="auth-pill-label" htmlFor="register-fullName">
+            Full Name
+          </label>
+          <input
+            required
+            className="auth-pill-input"
+            type="text"
+            name="fullName"
+            id="register-fullName"
+            placeholder="e.g. Alex Morgan"
+            value={formData.fullName}
+            onChange={handleChange}
+            disabled={loading}
+            autoComplete="name"
+            autoFocus
+          />
+          {errors.fullName && <span className="auth-pill-error">{errors.fullName}</span>}
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="register-email">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="register-email"
-              name="email"
-              className="form-control"
-              placeholder="alex@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={loading}
-              autoComplete="email"
-            />
-            {errors.email && <span className="form-error-text">{errors.email}</span>}
-          </div>
+          <label className="auth-pill-label" htmlFor="register-email">
+            Email Address
+          </label>
+          <input
+            required
+            className="auth-pill-input"
+            type="email"
+            name="email"
+            id="register-email"
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={handleChange}
+            disabled={loading}
+            autoComplete="email"
+          />
+          {errors.email && <span className="auth-pill-error">{errors.email}</span>}
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="register-password">
-              Password (min 6 characters) *
-            </label>
+          <label className="auth-pill-label" htmlFor="register-password">
+            Password (min 6 characters)
+          </label>
+          <div className="auth-pill-input-wrapper">
             <input
-              type="password"
-              id="register-password"
+              required
+              className="auth-pill-input"
+              type={showPassword ? 'text' : 'password'}
               name="password"
-              className="form-control"
-              placeholder="••••••••"
+              id="register-password"
+              placeholder="Create a strong password"
               value={formData.password}
               onChange={handleChange}
               disabled={loading}
               autoComplete="new-password"
             />
-            {errors.password && <span className="form-error-text">{errors.password}</span>}
+            <button
+              type="button"
+              className="auth-pill-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              )}
+            </button>
           </div>
+          {errors.password && <span className="auth-pill-error">{errors.password}</span>}
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="register-confirmPassword">
-              Confirm Password *
-            </label>
+          <label className="auth-pill-label" htmlFor="register-confirmPassword">
+            Confirm Password
+          </label>
+          <div className="auth-pill-input-wrapper">
             <input
-              type="password"
-              id="register-confirmPassword"
+              required
+              className="auth-pill-input"
+              type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
-              className="form-control"
-              placeholder="••••••••"
+              id="register-confirmPassword"
+              placeholder="Repeat your password"
               value={formData.confirmPassword}
               onChange={handleChange}
               disabled={loading}
               autoComplete="new-password"
             />
-            {errors.confirmPassword && (
-              <span className="form-error-text">{errors.confirmPassword}</span>
-            )}
+            <button
+              type="button"
+              className="auth-pill-toggle-btn"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+              tabIndex={-1}
+            >
+              {showConfirmPassword ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              )}
+            </button>
           </div>
+          {errors.confirmPassword && (
+            <span className="auth-pill-error">{errors.confirmPassword}</span>
+          )}
 
           <button
+            className="auth-pill-button"
             type="submit"
-            className="btn btn-primary"
-            style={{ width: '100%', marginTop: '0.75rem', padding: '0.75rem' }}
             disabled={loading}
             id="register-submit-btn"
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? (
+              <>
+                <span className="spinner" style={{ width: '16px', height: '16px', borderWidth: '2px', borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#ffffff' }}></span>
+                <span>Creating Account...</span>
+              </>
+            ) : (
+              'Create Account'
+            )}
           </button>
         </form>
 
-        <div className="auth-footer">
-          Already have an account?{' '}
-          <Link to="/login" style={{ fontWeight: 600 }} id="link-to-login">
+        <div className="auth-pill-footer-text">
+          Already have an account?
+          <Link to="/login" id="link-to-login">
             Sign In
+          </Link>
+        </div>
+
+        <span className="auth-pill-agreement">
+          <a href="#">Learn user licence agreement</a>
+        </span>
+
+        <div className="auth-pill-home-link">
+          <Link to="/">
+            ← Return to Home Page
           </Link>
         </div>
       </div>
